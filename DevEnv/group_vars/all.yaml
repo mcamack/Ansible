@@ -1,0 +1,35 @@
+programs:
+    - https://go.microsoft.com/fwlink/?LinkID=760868 #Visual Studio Code
+    - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb #Chrome
+
+dev_tools:
+    - git-core
+    - python-pip
+    - python3-pip
+
+python_tools:
+    - pip
+    - requests
+    - flask
+    - virtualenv
+
+python_scraping_tools:
+    - scrapy
+    - beautifulsoup4
+
+python_data_science_tools:
+    - jupyter
+    - numpy
+    - pandas
+    - sklearn
+    - scipy
+    - plotly
+    - bokeh
+    - matplotlib
+    - seaborn
+
+python_deep_learning:
+    - keras
+    - theano
+    - tensorflow
+    - NLTK

@@ -1,0 +1,80 @@
+---
+
+- name: Run on localhost
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+  
+  # - name: Delete Directories
+  #   become: yes
+  #   become_user: root
+  #   shell: "rm -rf {{ ansible_env.HOME }}/{{item}}/"
+  #   with_items:
+  #     - Music
+  #     - Pictures
+  #     - "Public"
+  #     - Templates
+  #     - Videos
+
+  - name: Install Programs
+    apt:
+      deb: "{{item}}"
+    with_items: "{{programs}}"
+  
+  - name: Install Development Tools
+    apt:
+      name: "{{ item }}"
+      state: latest
+    with_items: "{{dev_tools}}"
+
+  - name: Install Python2 Tools
+    pip:
+      executable: pip
+      name: "{{ item }}"
+      state: latest
+    with_items: "{{python_tools}}"
+
+  - name: Install Python3 Tools
+    pip:
+      executable: pip3
+      name: "{{ item }}"
+      state: latest
+    with_items: "{{python_tools}}"
+
+  - name: Install Web Scraping Tools (python2)
+    pip:
+      executable: pip
+      name: "{{ item }}"
+    with_items: "{{python_scraping_tools}}"
+
+  - name: Install Web Scraping Tools (python3)
+    pip:
+      executable: pip3
+      name: "{{ item }}"
+    with_items: "{{python_scraping_tools}}"
+
+  - name: Install Data Science Tools (python2)
+    pip:
+      executable: pip
+      name: "{{ item }}"
+    with_items: "{{python_data_science_tools}}"
+
+  - name: Install Data Science Tools (python3)
+    pip:
+      executable: pip3
+      name: "{{ item }}"
+    with_items: "{{python_data_science_tools}}"
+
+  - name: Install Deep Learning Tools (python2)
+    pip:
+      executable: pip
+      name: "{{ item }}"
+    with_items: "{{python_deep_learning}}"
+
+  - name: Install Deep Learning Tools (python3)
+    pip:
+      executable: pip3
+      name: "{{ item }}"
+    with_items: "{{python_deep_learning}}"
+
