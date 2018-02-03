@@ -2,7 +2,8 @@ programs:
     - https://go.microsoft.com/fwlink/?LinkID=760868 #Visual Studio Code
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb #Chrome
 
-dev_tools:
+dev_pkgs:
+    - curl
     - git-core
     - python-pip
     - python3-pip
@@ -33,3 +34,6 @@ python_deep_learning:
     - theano
     - tensorflow
     - NLTK
+
+python_cryptocurrency:
+    - pyota

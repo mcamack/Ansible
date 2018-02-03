@@ -6,75 +6,58 @@
   become: yes
   tasks:
   
-  # - name: Delete Directories
-  #   become: yes
-  #   become_user: root
-  #   shell: "rm -rf {{ ansible_env.HOME }}/{{item}}/"
-  #   with_items:
-  #     - Music
-  #     - Pictures
-  #     - "Public"
-  #     - Templates
-  #     - Videos
-
   - name: Install Programs
     apt:
       deb: "{{item}}"
     with_items: "{{programs}}"
   
-  - name: Install Development Tools
+  - name: Install Development Packages
     apt:
       name: "{{ item }}"
       state: latest
-    with_items: "{{dev_tools}}"
+    with_items: "{{dev_pkgs}}"
 
-  - name: Install Python2 Tools
+  - name: Install Python Tools
     pip:
-      executable: pip
-      name: "{{ item }}"
-      state: latest
-    with_items: "{{python_tools}}"
+      executable: "{{ item[0] }}"
+      name: "{{ item[1] }}"
+    with_nested: 
+      - ['pip', 'pip3']
+      - "{{python_tools}}"
 
-  - name: Install Python3 Tools
+  - name: Install Web Scraping Tools
     pip:
-      executable: pip3
-      name: "{{ item }}"
-      state: latest
-    with_items: "{{python_tools}}"
+      executable: "{{ item[0] }}"
+      name: "{{ item[1] }}"
+    with_nested: 
+      - ['pip', 'pip3']
+      - "{{python_scraping_tools}}"
 
-  - name: Install Web Scraping Tools (python2)
+  - name: Install Data Science Tools
     pip:
-      executable: pip
-      name: "{{ item }}"
-    with_items: "{{python_scraping_tools}}"
+      executable: "{{ item[0] }}"
+      name: "{{ item[1] }}"
+    with_nested: 
+      - ['pip', 'pip3']
+      - "{{python_data_science_tools}}"
 
-  - name: Install Web Scraping Tools (python3)
+  - name: Install Deep Learning Tools
     pip:
-      executable: pip3
-      name: "{{ item }}"
-    with_items: "{{python_scraping_tools}}"
+      executable: "{{ item[0] }}"
+      name: "{{ item[1] }}"
+    with_nested: 
+      - ['pip', 'pip3']
+      - "{{python_deep_learning}}"
 
-  - name: Install Data Science Tools (python2)
+  - name: Install Cryptocurrency Tools
     pip:
-      executable: pip
-      name: "{{ item }}"
-    with_items: "{{python_data_science_tools}}"
+      executable: "{{ item[0] }}"
+      name: "{{ item[1] }}"
+    with_nested: 
+      - ['pip', 'pip3']
+      - "{{python_cryptocurrency}}"
 
-  - name: Install Data Science Tools (python3)
-    pip:
-      executable: pip3
-      name: "{{ item }}"
-    with_items: "{{python_data_science_tools}}"
-
-  - name: Install Deep Learning Tools (python2)
-    pip:
-      executable: pip
-      name: "{{ item }}"
-    with_items: "{{python_deep_learning}}"
-
-  - name: Install Deep Learning Tools (python3)
-    pip:
-      executable: pip3
-      name: "{{ item }}"
-    with_items: "{{python_deep_learning}}"
-
+## Install DevOps Tools
+  - name: Install DevOps Tools
+    include_role:
+      name: install-devops
