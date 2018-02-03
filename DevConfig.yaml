@@ -1,0 +1,57 @@
+---
+
+- name: Run on localhost
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+  
+  # - name: Delete Directories
+  #   become: yes
+  #   become_user: root
+  #   shell: "rm -rf {{ ansible_env.HOME }}/{{item}}/"
+  #   with_items:
+  #     - Music
+  #     - Pictures
+  #     - "Public"
+  #     - Templates
+  #     - Videos
+
+  - name: Install Visual Studio Code
+    apt:
+      deb: https://go.microsoft.com/fwlink/?LinkID=760868
+  
+  - name: Install Development Tools
+    apt:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - git-core
+      - python-pip
+      - python3-pip
+
+  - name: Install Data Science Tools (python2)
+    pip:
+      executable: pip
+      name: "{{ item }}"
+    with_items:
+      - numpy
+      - pandas
+      - sklearn
+      - matplotlib
+      - seaborn
+      - keras
+      - virtualenv
+
+  - name: Install Data Science Tools (python3)
+    pip:
+      executable: pip3
+      name: "{{ item }}"
+    with_items:
+      - numpy
+      - pandas
+      - sklearn
+      - matplotlib
+      - seaborn
+      - keras
+      - virtualenv
