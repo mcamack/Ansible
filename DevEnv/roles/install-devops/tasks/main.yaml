@@ -31,3 +31,28 @@
     - name: Clean Up
       shell: rm packer-binary.zip
   when: not ret_packer.stat.exists
+
+- name: Is Vagrant Installed?
+  stat:
+    path: /usr/bin/vagrant
+  register: ret_vagrant
+
+- name: Install Vagrant
+  apt:
+    deb: https://releases.hashicorp.com/vagrant/2.0.2/vagrant_2.0.2_x86_64.deb?_ga=2.73313299.1420311161.1517697788-1645665399.1517697788
+
+
+- name: Is Terraform Installed?
+  stat:
+    path: /usr/bin/terraform
+  register: ret_terraform
+
+- name: Install Terraform
+  block:
+    - name: Download Terraform Binary
+      shell: wget -O terraform-binary.zip https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip?_ga=2.130732813.345143745.1517698495-970064937.1517698495
+    - name: Unzip Terraform
+      shell: unzip terraform-binary.zip -d /usr/bin/
+    - name: Clean Up
+      shell: rm terraform-binary.zip
+  when: not ret_terraform.stat.exists
