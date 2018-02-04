@@ -19,42 +19,47 @@
 
   - name: Install Python Tools
     pip:
+      state: present
       executable: "{{ item[0] }}"
       name: "{{ item[1] }}"
     with_nested: 
-      - ['pip', 'pip3']
+      - "{{pip_installs}}"
       - "{{python_tools}}"
 
   - name: Install Web Scraping Tools
     pip:
+      state: present
       executable: "{{ item[0] }}"
       name: "{{ item[1] }}"
     with_nested: 
-      - ['pip', 'pip3']
+      - "{{pip_installs}}"
       - "{{python_scraping_tools}}"
 
   - name: Install Data Science Tools
     pip:
+      state: present
       executable: "{{ item[0] }}"
       name: "{{ item[1] }}"
     with_nested: 
-      - ['pip', 'pip3']
+      - "{{pip_installs}}"
       - "{{python_data_science_tools}}"
 
   - name: Install Deep Learning Tools
     pip:
+      state: present
       executable: "{{ item[0] }}"
       name: "{{ item[1] }}"
     with_nested: 
-      - ['pip', 'pip3']
+      - "{{pip_installs}}"
       - "{{python_deep_learning}}"
 
   - name: Install Cryptocurrency Tools
     pip:
+      state: present
       executable: "{{ item[0] }}"
       name: "{{ item[1] }}"
     with_nested: 
-      - ['pip', 'pip3']
+      - "{{pip_installs}}"
       - "{{python_cryptocurrency}}"
 
 ## Install DevOps Tools

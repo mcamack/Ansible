@@ -8,6 +8,8 @@ dev_pkgs:
     - python-pip
     - python3-pip
 
+pip_installs: ['pip', 'pip3']
+
 python_tools:
     - pip
     - requests
