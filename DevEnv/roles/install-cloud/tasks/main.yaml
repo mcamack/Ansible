@@ -1,0 +1,40 @@
+---  # roles/install-cloud/tasks/main.yaml
+
+- name: Install AWS cli
+  shell: pip install awscli --upgrade
+
+
+- name: Is Google Cloud cli Installed?
+  stat:
+    path: /usr/bin/gsutil
+  register: ret_gcloud
+
+- name: Install Google Cloud cli
+  block:
+    - name: Create an environment variable for the correct distribution and Add the Cloud SDK distribution URI as a package source
+      shell: |
+        export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+        echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+    - name: Import the Google Cloud public key
+      shell: curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+    - name: Update and install the Cloud SDK
+      shell: sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+  when: not ret_gcloud.stat.exists
+
+
+- name: Is Azure cli Installed?
+  stat:
+    path: /usr/bin/az
+  register: ret_azure
+
+- name: Install Azure cli
+  block:
+    - name: Add the Azure distribution URI as a package source
+      shell: echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+    - name: Import the Azure public key
+      shell: sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+    - name: Update and install the Azure SDK
+      shell: |
+        sudo apt-get install -y apt-transport-https
+        sudo apt-get update && sudo apt-get install -y azure-cli
+  when: not ret_azure.stat.exists
